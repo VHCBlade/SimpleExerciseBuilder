@@ -53,10 +53,12 @@ class Workout implements GenericModel {
   static const EXERCISE_LIST = 'exes';
   static const WORKOUT_ID = 'id';
   static const NAME = 'name';
+  static const CUSTOM_MESSAGE = 'custom_message';
 
   List<WorkoutExercise> exerciseList = [];
   String? name;
   int? id;
+  String? customMessage;
 
   Workout({this.name, this.id});
 
@@ -64,6 +66,7 @@ class Workout implements GenericModel {
   void loadFromMap(Map<String, dynamic> map) {
     name = map[NAME];
     id = map[WORKOUT_ID];
+    customMessage = map[CUSTOM_MESSAGE];
     final List<Map<String, dynamic>> rawExercises = map[EXERCISE_LIST];
     exerciseList =
         rawExercises.map((val) => WorkoutExercise()..loadFromMap(val)).toList();

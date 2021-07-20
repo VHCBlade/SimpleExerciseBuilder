@@ -2,6 +2,9 @@ import 'package:event_bloc/event_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_exercise_builder/bloc/counter.dart';
+import 'package:simple_exercise_builder/bloc/navigation/navigation.dart';
+import 'package:simple_exercise_builder/bloc_layer.dart';
+import 'package:simple_exercise_builder/widget/navigation.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,15 +14,43 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (_, parentChannel) => CounterBloc(parentChannel: parentChannel),
-        child: MaterialApp(
-          title: 'Exercise Demo',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          home: const MyHomePage(title: 'Exercise Demo Home Page'),
-        ));
+    return BlocLayer(child: AppLayer());
+  }
+}
+
+// ignore: use_key_in_widget_constructors
+class AppLayer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final bloc = BlocProvider.watch<MainNavigationBloc>(context);
+
+    late final MaterialColor color;
+    switch (bloc.currentMainNavigation) {
+      case 'home':
+        color = Colors.blue;
+        break;
+      case 'play':
+        color = Colors.orange;
+        break;
+      case 'workout':
+        color = Colors.green;
+        break;
+      case 'exercise':
+        color = Colors.red;
+        break;
+      case 'settings':
+      default:
+        color = Colors.pink;
+        break;
+    }
+
+    return MaterialApp(
+      title: 'Exercise Demo',
+      theme: ThemeData(
+        primarySwatch: color,
+      ),
+      home: const MyHomePage(title: 'Exercise Demo Home Page'),
+    );
   }
 }
 
@@ -31,9 +62,34 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.watch<CounterBloc>(context);
+    final navBloc = BlocProvider.watch<MainNavigationBloc>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
+      ),
+      bottomNavigationBar: MainNavigationBar(
+        currentNavigation: navBloc.currentMainNavigation,
+        navigationPossibilities: const [
+          'home',
+          'play',
+          'workout',
+          'exercise',
+          'settings'
+        ],
+        builder: (index, onTap) => BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          currentIndex: index,
+          onTap: onTap,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.play_arrow), label: 'Play'),
+            BottomNavigationBarItem(icon: Icon(Icons.work), label: 'Workout'),
+            BottomNavigationBarItem(icon: Icon(Icons.note), label: 'Exercise'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.settings), label: 'Settings'),
+          ],
+        ),
       ),
       body: Center(
         child: Column(
