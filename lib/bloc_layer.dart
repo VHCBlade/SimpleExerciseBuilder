@@ -12,7 +12,9 @@ class BlocLayer extends StatelessWidget {
     return BlocProvider(
       create: (_, parentChannel) => CounterBloc(parentChannel: parentChannel),
       child: BlocProvider(
-          create: (_, parentChannel) => MainNavigationBloc(), child: child),
+          create: (_, parentChannel) =>
+              MainNavigationBloc(parentChannel: parentChannel),
+          child: child),
     );
   }
 }
