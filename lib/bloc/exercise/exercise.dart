@@ -8,7 +8,7 @@ class ExerciseBloc extends Bloc {
   final BlocEventChannel eventChannel;
   final ExerciseRepository repo;
 
-  late final searchMeUp =
+  late final _searchMeUp =
       SearchMeUp<Exercise>(DefaultSearchMeUpDelegate(converters: [
     (exer) => [exer.name!]
   ]));
@@ -18,13 +18,25 @@ class ExerciseBloc extends Bloc {
 
   List<int> exerciseList = [];
   Map<int, Exercise> exerciseMap = {};
+  int? selectedExercise;
   String? searchTerm;
 
   /// This will load the exercises from the [repo]
   void loadExercises() async {
-    final exercises = await repo.retrieveExercise();
+    final exercises = await repo.retrieveExercises();
 
     exercises.forEach((element) => exerciseMap[element.id!] = element);
+    _generateExerciseList();
+    updateBloc();
+  }
+
+  void search(String search) {
+    final actualSearch = search.trim().isEmpty ? null : search.trim();
+    if (actualSearch == searchTerm) {
+      return;
+    }
+
+    searchTerm = actualSearch;
     _generateExerciseList();
     updateBloc();
   }
@@ -37,7 +49,7 @@ class ExerciseBloc extends Bloc {
       return;
     }
 
-    final search = searchMeUp.rankedSearch(searchTerm!, exerciseMap.values);
+    final search = _searchMeUp.rankedSearch(searchTerm!, exerciseMap.values);
     search.forEach(_addExercisesSorted);
   }
 

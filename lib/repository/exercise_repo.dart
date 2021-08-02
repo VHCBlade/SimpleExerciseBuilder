@@ -2,11 +2,12 @@ import 'package:event_bloc/event_bloc.dart';
 import 'package:simple_exercise_builder/model/exercise.dart';
 
 abstract class ExerciseRepository extends Repository {
-  Future<Iterable<Exercise>> retrieveExercise();
+  Future<Iterable<Exercise>> retrieveExercises();
 }
 
-class DevExerciseRepository extends Repository {
-  Future<Iterable<Exercise>> retrieveExercise() async {
+class DevExerciseRepository extends ExerciseRepository {
+  @override
+  Future<Iterable<Exercise>> retrieveExercises() async {
     var incrementer = 0;
     return [
       Exercise(
