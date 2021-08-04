@@ -53,6 +53,12 @@ class _ExerciseSearchFieldState extends State<ExerciseSearchField> {
   Widget build(BuildContext context) {
     return TextField(
         controller: controller,
+        textInputAction: TextInputAction.search,
+        decoration: const InputDecoration(
+            hintText: 'Search',
+            prefixIcon: Icon(Icons.search),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(100)))),
         onSubmitted: (val) =>
             BlocProvider.read<ExerciseBloc>(context).search(val));
   }

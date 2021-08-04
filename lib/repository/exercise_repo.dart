@@ -14,7 +14,7 @@ class DevExerciseRepository extends ExerciseRepository {
         availableExercises: 0,
         muscleGroups: 0,
         id: incrementer++,
-        name: 'Pull up',
+        name: 'Pull ups',
       ),
       Exercise(
         availableExercises: 0,
@@ -26,19 +26,19 @@ class DevExerciseRepository extends ExerciseRepository {
         availableExercises: 0,
         muscleGroups: 0,
         id: incrementer++,
-        name: 'Plank',
+        name: 'Planks',
       ),
       Exercise(
         availableExercises: 0,
         muscleGroups: 0,
         id: incrementer++,
-        name: 'Jumping Jack',
+        name: 'Jumping Jacks',
       ),
       Exercise(
         availableExercises: 0,
         muscleGroups: 0,
         id: incrementer++,
-        name: 'High Knee',
+        name: 'High Knees',
       ),
       Exercise(
         availableExercises: 0,
@@ -56,13 +56,49 @@ class DevExerciseRepository extends ExerciseRepository {
         availableExercises: 0,
         muscleGroups: 0,
         id: incrementer++,
-        name: 'Jog',
+        name: 'Jogging',
       ),
       Exercise(
         availableExercises: 0,
         muscleGroups: 0,
         id: incrementer++,
-        name: 'Push up',
+        name: 'Push ups',
+      ),
+      Exercise(
+        availableExercises: 0,
+        muscleGroups: 0,
+        id: incrementer++,
+        name: 'Boxing',
+      ),
+      Exercise(
+        availableExercises: 0,
+        muscleGroups: 0,
+        id: incrementer++,
+        name: 'Squats',
+      ),
+      Exercise(
+        availableExercises: 0,
+        muscleGroups: 0,
+        id: incrementer++,
+        name: 'Elliptical Machine',
+      ),
+      Exercise(
+        availableExercises: 0,
+        muscleGroups: 0,
+        id: incrementer++,
+        name: 'Tip Toes',
+      ),
+      Exercise(
+        availableExercises: 0,
+        muscleGroups: 0,
+        id: incrementer++,
+        name: 'Toe Touching',
+      ),
+      Exercise(
+        availableExercises: 0,
+        muscleGroups: 0,
+        id: incrementer++,
+        name: 'Burpees',
       ),
     ];
   }

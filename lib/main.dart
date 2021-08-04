@@ -26,7 +26,7 @@ class AppLayer extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Exercise Demo',
-      theme: ThemeData(),
+      theme: ThemeData(highlightColor: Colors.lightBlue[100]),
       darkTheme: ThemeData.dark(),
       home: const MyHomePage(title: 'Exercise Demo Home Page'),
     );
@@ -66,6 +66,7 @@ class MyHomePage extends StatelessWidget {
 
     return Scaffold(
       bottomNavigationBar: navigationBar,
+      resizeToAvoidBottomInset: false,
       body: navBloc.currentMainNavigation == 'exercise'
           ? const ExerciseList()
           : Center(
@@ -92,11 +93,6 @@ class MyHomePage extends StatelessWidget {
                 ],
               ),
             ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: bloc.incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
     );
   }
 }

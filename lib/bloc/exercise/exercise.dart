@@ -18,8 +18,14 @@ class ExerciseBloc extends Bloc {
 
   List<int> exerciseList = [];
   Map<int, Exercise> exerciseMap = {};
-  int? selectedExercise;
+  Exercise? selectedExercise;
   String? searchTerm;
+
+  void selectExercise(Exercise? exercise) {
+    updateBlocOnChange(
+        change: () => selectedExercise = exercise,
+        tracker: () => [selectedExercise]);
+  }
 
   /// This will load the exercises from the [repo]
   void loadExercises() async {
