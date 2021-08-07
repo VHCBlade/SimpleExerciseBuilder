@@ -5,9 +5,11 @@ class Exercise implements GenericModel {
   static const MUSCLE_GROUPS = 'musc';
   static const ID = 'id';
   static const NAME = 'name';
+  static const DEFAULT_REST = 'def-rest';
   int? availableExercises;
   int? muscleGroups;
   int? id;
+  int? defaultRestTimeSeconds;
   String? name;
 
   Exercise({
@@ -15,6 +17,7 @@ class Exercise implements GenericModel {
     this.muscleGroups,
     this.id,
     this.name,
+    this.defaultRestTimeSeconds,
   });
 
   @override
@@ -23,6 +26,7 @@ class Exercise implements GenericModel {
     muscleGroups = map[MUSCLE_GROUPS];
     id = map[ID];
     name = map[NAME];
+    defaultRestTimeSeconds = map[DEFAULT_REST];
   }
 
   @override
@@ -31,6 +35,7 @@ class Exercise implements GenericModel {
         MUSCLE_GROUPS: muscleGroups,
         ID: id,
         NAME: name,
+        DEFAULT_REST: defaultRestTimeSeconds
       };
 
   @override
