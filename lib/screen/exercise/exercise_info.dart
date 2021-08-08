@@ -52,7 +52,7 @@ String generateMuscleGroupText(Exercise exercise) {
 }
 
 String generateExerciseEquipmentText(Exercise exercise) {
-  final set = convertIntToExerciseEquipment(exercise.muscleGroups!);
+  final set = convertIntToExerciseEquipment(exercise.availableExercises!);
 
   final iterable = set.map((val) {
     switch (val) {
