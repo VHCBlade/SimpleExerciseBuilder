@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:simple_exercise_builder/bloc/exercise/exercise.dart';
 import 'package:simple_exercise_builder/model/exercise.dart';
+import 'package:simple_exercise_builder/screen/exercise/exercise_info.dart';
 import 'package:simple_exercise_builder/screen/exercise/search_bar.dart';
 
 class ExerciseList extends StatelessWidget {
@@ -88,10 +89,9 @@ class _ExerciseWidgetState extends State<ExerciseWidget>
             SizeTransition(
                 axisAlignment: -1,
                 sizeFactor: animation,
-                child: const Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.')))
+                child: Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                    child: ExerciseInfo(exercise: widget.exercise)))
           ],
         ),
       ),
