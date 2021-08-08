@@ -1,10 +1,9 @@
 import 'package:event_bloc/event_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:simple_exercise_builder/bloc/counter.dart';
 import 'package:simple_exercise_builder/bloc/navigation/navigation.dart';
 import 'package:simple_exercise_builder/bloc_layer.dart';
 import 'package:simple_exercise_builder/widget/navigation.dart';
+import 'package:simple_exercise_builder/widget/home_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,10 +21,10 @@ class MyApp extends StatelessWidget {
 class AppLayer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.watch<MainNavigationBloc>(context);
+    final navBloc = BlocProvider.watch<MainNavigationBloc>(context);
 
     late final MaterialColor color;
-    switch (bloc.currentMainNavigation) {
+    switch (navBloc.currentMainNavigation) {
       case 'home':
         color = Colors.blue;
         break;
@@ -45,81 +44,41 @@ class AppLayer extends StatelessWidget {
     }
 
     return MaterialApp(
-      title: 'Exercise Demo',
-      theme: ThemeData(
-        primarySwatch: color,
-      ),
-      home: const MyHomePage(title: 'Exercise Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    final bloc = BlocProvider.watch<CounterBloc>(context);
-    final navBloc = BlocProvider.watch<MainNavigationBloc>(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      bottomNavigationBar: MainNavigationBar(
-        currentNavigation: navBloc.currentMainNavigation,
-        navigationPossibilities: const [
-          'home',
-          'play',
-          'workout',
-          'exercise',
-          'settings'
-        ],
-        builder: (index, onTap) => BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          currentIndex: index,
-          onTap: onTap,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.play_arrow), label: 'Play'),
-            BottomNavigationBarItem(icon: Icon(Icons.work), label: 'Workout'),
-            BottomNavigationBarItem(icon: Icon(Icons.note), label: 'Exercise'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.settings), label: 'Settings'),
-          ],
+        title: 'Exercise Demo',
+        theme: ThemeData(
+          primarySwatch: color,
         ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Exercise Demo Home Page'),
+          ),
+          bottomNavigationBar: MainNavigationBar(
+            currentNavigation: navBloc.currentMainNavigation,
+            navigationPossibilities: const [
+              'home',
+              'play',
+              'workout',
+              'exercise',
+              'settings',
+            ],
+            builder: (index, onTap) => BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              currentIndex: index,
+              onTap: onTap,
+              items: const [
+                BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.play_arrow), label: 'Play'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.work), label: 'Workout'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.note), label: 'Exercise'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.settings), label: 'Settings'),
+              ],
             ),
-            Text(
-              '${bloc.counter}',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            ElevatedButton(
-                onPressed: () => context
-                    .read<BlocEventChannel>()
-                    .fireEvent(INCREMENT_COUNTER_EVENT, null),
-                child: const Text('Increment Counter')),
-            ElevatedButton(
-                onPressed: () => context
-                    .read<BlocEventChannel>()
-                    .fireEvent(RESET_COUNTER_EVENT, null),
-                child: const Text('Reset Counter')),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: bloc.incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
-    );
+          ),
+          body: HomeScreen(),
+        ));
   }
 }
