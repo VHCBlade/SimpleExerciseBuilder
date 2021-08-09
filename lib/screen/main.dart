@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:event_bloc/event_bloc.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,23 +22,19 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     controller = CarouselController();
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   }
 
   /// Calculates the aspect ratio of the currently available viewport, to make the carousel take the entire screen.
   double calculateAspectRatio(BuildContext context) {
     final data = MediaQuery.of(context);
 
-    print(data.viewInsets.bottom);
-
     final value = data.size.width /
         (data.size.height -
             data.padding.top -
-            data.padding.bottom -
             data.viewPadding.top -
-            data.viewPadding.bottom -
             data.viewInsets.top -
-            data.viewInsets.bottom);
+            data.padding.left -
+            data.padding.right);
 
     return value;
   }

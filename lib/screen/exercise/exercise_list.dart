@@ -77,22 +77,24 @@ class _ExerciseWidgetState extends State<ExerciseWidget>
 
     return AnimatedBuilder(
       animation: animation,
-      builder: (_, _a) => Card(
-        color: tween.evaluate(animation),
-        child: Column(
-          children: [
-            MainExerciseWidget(
-              action: widget.action,
-              animation: animation,
-              exercise: widget.exercise,
-            ),
-            SizeTransition(
-                axisAlignment: -1,
-                sizeFactor: animation,
-                child: Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                    child: ExerciseInfo(exercise: widget.exercise)))
-          ],
+      builder: (_, _a) => SafeArea(
+        child: Card(
+          color: tween.evaluate(animation),
+          child: Column(
+            children: [
+              MainExerciseWidget(
+                action: widget.action,
+                animation: animation,
+                exercise: widget.exercise,
+              ),
+              SizeTransition(
+                  axisAlignment: -1,
+                  sizeFactor: animation,
+                  child: Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                      child: ExerciseInfo(exercise: widget.exercise)))
+            ],
+          ),
         ),
       ),
     );
