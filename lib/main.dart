@@ -1,11 +1,9 @@
 import 'package:event_bloc/event_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:simple_exercise_builder/bloc/counter.dart';
 import 'package:simple_exercise_builder/bloc/navigation/navigation.dart';
 import 'package:simple_exercise_builder/bloc_layer.dart';
 import 'package:simple_exercise_builder/repository_layer.dart';
-import 'package:simple_exercise_builder/screen/exercise/exercise_list.dart';
+import 'package:simple_exercise_builder/screen/main.dart';
 import 'package:simple_exercise_builder/widget/navigation.dart';
 
 void main() {
@@ -40,7 +38,6 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.watch<CounterBloc>(context);
     final navBloc = BlocProvider.watch<MainNavigationBloc>(context);
     final navigationBar = MainNavigationBar(
       currentNavigation: navBloc.currentMainNavigation,
@@ -65,34 +62,8 @@ class MyHomePage extends StatelessWidget {
     );
 
     return Scaffold(
-      bottomNavigationBar: navigationBar,
-      resizeToAvoidBottomInset: false,
-      body: navBloc.currentMainNavigation == 'exercise'
-          ? const ExerciseList()
-          : Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Text(
-                    'You have pushed the button this many times:',
-                  ),
-                  Text(
-                    '${bloc.counter}',
-                    style: Theme.of(context).textTheme.headline4,
-                  ),
-                  ElevatedButton(
-                      onPressed: () => context
-                          .read<BlocEventChannel>()
-                          .fireEvent(INCREMENT_COUNTER_EVENT, null),
-                      child: const Text('Increment Counter')),
-                  ElevatedButton(
-                      onPressed: () => context
-                          .read<BlocEventChannel>()
-                          .fireEvent(RESET_COUNTER_EVENT, null),
-                      child: const Text('Reset Counter')),
-                ],
-              ),
-            ),
-    );
+        bottomNavigationBar: navigationBar,
+        resizeToAvoidBottomInset: false,
+        body: const MainScreen());
   }
 }
