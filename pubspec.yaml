@@ -12,10 +12,12 @@ dependencies:
   flutter:
     sdk: flutter
 
+  carousel_slider: ^4.0.0
   cupertino_icons: ^1.0.2
   event_bloc: ^1.0.0+1
   hive: ^2.0.4
   provider: ^5.0.0
+  search_me_up: ^0.1.0
 
 dev_dependencies:
   flutter_test:
