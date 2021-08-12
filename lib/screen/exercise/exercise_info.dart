@@ -28,7 +28,7 @@ class ExerciseInfo extends StatelessWidget {
 }
 
 String generateMuscleGroupText(Exercise exercise) {
-  final set = convertIntToMuscleGroups(exercise.muscleGroups!);
+  final set = exercise.muscleGroupsSet;
 
   final iterable = set.map((val) {
     switch (val) {
@@ -52,7 +52,7 @@ String generateMuscleGroupText(Exercise exercise) {
 }
 
 String generateExerciseEquipmentText(Exercise exercise) {
-  final set = convertIntToExerciseEquipment(exercise.availableExercises!);
+  final set = exercise.availableExerciseEquipment;
 
   final iterable = set.map((val) {
     switch (val) {
