@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:simple_exercise_builder/bloc/counter.dart';
 import 'package:simple_exercise_builder/bloc/navigation/navigation.dart';
 import 'package:simple_exercise_builder/screen/exercise/exercise_list.dart';
+import 'package:simple_exercise_builder/screen/home/home_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -65,7 +66,7 @@ class _MainScreenState extends State<MainScreen> {
       carouselController: controller,
       items: const [
         // Home
-        PlaceholderScreen(),
+        HomeScreen(),
         // Workout
         PlaceholderScreen(),
         // Exercise

@@ -5,7 +5,6 @@ import 'package:simple_exercise_builder/bloc_layer.dart';
 import 'package:simple_exercise_builder/repository_layer.dart';
 import 'package:simple_exercise_builder/screen/main.dart';
 import 'package:simple_exercise_builder/widget/navigation.dart';
-import 'package:simple_exercise_builder/widget/home_screen.dart';
 
 void main() {
   runApp(MyApp());
