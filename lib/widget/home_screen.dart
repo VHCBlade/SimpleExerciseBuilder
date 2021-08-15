@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 
 // ignore: use_key_in_widget_constructors
 class HomeScreen extends StatelessWidget {
+  final String workoutName = "Haron's Workout";
+  final String workoutDuration = "30 Minutes";
+  final String workoutEquipment = "Pull Up Bar, Balance Board";
+  final String workoutMuscleGroups = "Back, Arm, Legs, Abdominal, Chest";
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -13,7 +18,64 @@ class HomeScreen extends StatelessWidget {
           Expanded(
             flex: 4,
             child: Container(
-              color: Colors.amber,
+              margin: const EdgeInsets.only(
+                left: 30,
+                right: 30,
+                top: 120,
+                bottom: 120,
+              ),
+              child: Card(
+                elevation: 5,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  child: Stack(
+                    children: [
+                      const Align(
+                        alignment: Alignment.topRight,
+                        child: Icon(Icons.edit),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(
+                            workoutName,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            "$workoutDuration Total",
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              const Text("Equipment:"),
+                              Text(workoutEquipment),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              const Text("Muscle Groups:"),
+                              Text(workoutMuscleGroups),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
           Expanded(
@@ -40,7 +102,7 @@ class HomeScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 40,
                         fontWeight: FontWeight.bold,
-                      )
+                      ),
                     ),
                     onPressed: () {},
                   ),
