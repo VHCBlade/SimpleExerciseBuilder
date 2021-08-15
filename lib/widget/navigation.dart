@@ -56,10 +56,10 @@ class MainNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final index = navigationPossibilities.indexOf(currentNavigation);
-    return builder(
-        max(index, 0),
-        (i) => context
-            .read<BlocEventChannel>()
-            .fireEvent(MAIN_NAVIGATION_EVENT, navigationPossibilities[i]));
+    return builder(max(index, 0), (i) {
+      context
+          .read<BlocEventChannel>()
+          .fireEvent(MAIN_NAVIGATION_EVENT, navigationPossibilities[i]);
+    });
   }
 }
