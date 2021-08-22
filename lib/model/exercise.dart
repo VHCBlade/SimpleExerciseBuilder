@@ -1,3 +1,4 @@
+import 'package:simple_exercise_builder/model/enum.dart';
 import 'package:simple_exercise_builder/model/generic.dart';
 
 class Exercise implements GenericModel {
@@ -19,6 +20,15 @@ class Exercise implements GenericModel {
     this.name,
     this.defaultRestTimeSeconds,
   });
+
+  Set<MuscleGroup> get muscleGroupsSet => muscleGroups == null
+      ? throw ArgumentError('Muscle Groups Must not be null on runtime')
+      : convertIntToMuscleGroups(muscleGroups!);
+
+  Set<ExerciseEquipment> get availableExerciseEquipment =>
+      availableExercises == null
+          ? throw ArgumentError('ExerciseEquipment Must not be null on runtime')
+          : convertIntToExerciseEquipment(availableExercises!);
 
   @override
   void loadFromMap(Map<String, dynamic> map) {
