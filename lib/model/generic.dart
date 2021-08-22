@@ -23,6 +23,8 @@ class GenericTypeAdapter<T extends GenericModel> extends TypeAdapter<T> {
 
 /// This is the interface of all models that are saved.
 abstract class GenericModel {
+  GenericModel.fromMap(Map<String, dynamic> map);
+
   Map<String, dynamic> toMap();
   void loadFromMap(Map<String, dynamic> map);
 

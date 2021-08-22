@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 class SelectedWorkout extends StatelessWidget {
   final String workoutName;
-  final String workoutDuration;
-  final String workoutEquipment;
-  final String workoutMuscleGroups;
+  final int workoutDuration;
+  final List<String> workoutEquipment;
+  final List<String> workoutMuscleGroups;
 
   const SelectedWorkout({
     Key? key,
@@ -14,6 +14,11 @@ class SelectedWorkout extends StatelessWidget {
     required this.workoutEquipment,
     required this.workoutMuscleGroups,
   }) : super(key: key);
+
+  String get workoutDurationDisplayText =>
+      (workoutDuration / 60).toStringAsFixed(2) + ' minutes';
+  String get workoutEquipmentDisplayText => workoutEquipment.join(', ');
+  String get workoutMuscleGroupsDisplayText => workoutMuscleGroups.join(', ');
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +50,7 @@ class SelectedWorkout extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "$workoutDuration Total",
+                  "$workoutDurationDisplayText Total",
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 18,
@@ -54,13 +59,13 @@ class SelectedWorkout extends StatelessWidget {
                 Column(
                   children: [
                     const Text("Equipment:"),
-                    Text(workoutEquipment),
+                    Text(workoutEquipmentDisplayText),
                   ],
                 ),
                 Column(
                   children: [
                     const Text("Muscle Groups:"),
-                    Text(workoutMuscleGroups),
+                    Text(workoutMuscleGroupsDisplayText),
                   ],
                 ),
               ],

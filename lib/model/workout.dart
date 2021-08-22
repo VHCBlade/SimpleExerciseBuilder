@@ -1,3 +1,4 @@
+import 'package:simple_exercise_builder/model/enum.dart';
 import 'package:simple_exercise_builder/model/generic.dart';
 
 /// Wourkout Exercise details stored within a workout.
@@ -24,6 +25,32 @@ class WorkoutExercise implements GenericModel {
     this.restBetween,
     this.restAfter,
   });
+
+  // TODO: Make a better implementation on getting just one equipment name from bitwise value
+  String get equipmentUsedDisplayName => equipmentUsed == null
+      ? throw ArgumentError(
+          'Equipment used on Workout exercise must not be null on runtime')
+      : convertIntToExerciseEquipment(equipmentUsed!)
+          .toList()[0]
+          .getDisplayText();
+
+  int get totalTime {
+    if (time == null) {
+      throw ArgumentError(
+          'Time on Workout exercise must not be null on runtime');
+    } else if (setCount == null) {
+      throw ArgumentError(
+          'Set count on Workout exercise must not be null on runtime');
+    } else if (restBetween == null) {
+      throw ArgumentError(
+          'Rest in between on Workout exercise must not be null on runtime');
+    } else if (restAfter == null) {
+      throw ArgumentError(
+          'Rest after on Workout exercise must not be null on runtime');
+    }
+
+    return ((time! + restBetween!) * setCount!) - restBetween! + restAfter!;
+  }
 
   @override
   void loadFromMap(Map<String, dynamic> map) {
@@ -61,6 +88,28 @@ class Workout implements GenericModel {
   String? customMessage;
 
   Workout({this.name, this.id});
+
+  Workout.fromMap(Map<String, dynamic> map) {
+    loadFromMap(map);
+  }
+
+  int get totalTime {
+    final exerciseTotalTimes = exerciseList.map((exer) => exer.totalTime);
+    return exerciseTotalTimes.fold(
+        0, (totalTimeSum, nextTotalTime) => totalTimeSum + nextTotalTime);
+  }
+
+  List<String> get equipmentUsed {
+    if (exerciseList.isEmpty) {
+      return [ExerciseEquipment.none.getDisplayText()];
+    }
+    final workoutEquipment = exerciseList
+        .map((exer) => exer.equipmentUsedDisplayName)
+        .toSet()
+        .toList();
+    workoutEquipment.remove(ExerciseEquipment.none.getDisplayText());
+    return workoutEquipment;
+  }
 
   @override
   void loadFromMap(Map<String, dynamic> map) {
