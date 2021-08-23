@@ -19,23 +19,15 @@ class WorkoutBloc extends Bloc {
   WorkoutBloc({BlocEventChannel? parentChannel, required this.repo})
       : eventChannel = BlocEventChannel(parentChannel);
 
-  List<int> preCreatedWorkoutList = [];
-  Map<int, Workout> preCreatedWorkoutMap = {};
-  List<int> userCreatedWorkoutList = [];
-  Map<int, Workout> userCreatedWorkoutMap = {};
+  List<int> workoutList = [];
+  Map<int, Workout> workoutMap = {};
   String? searchTerm;
 
   /// This will load the workouts from the [repo]
   void loadWorkouts() async {
-    final preCreatedWorkouts = await repo.retrievePreCreatedWorkouts();
-    preCreatedWorkouts
-        .forEach((element) => preCreatedWorkoutMap[element.id!] = element);
-
-    final userCreatedWorkouts = await repo.retrieveUserCreatedWorkouts();
-    userCreatedWorkouts
-        .forEach((element) => userCreatedWorkoutMap[element.id!] = element);
-
-    _generateWorkoutLists();
+    final workouts = await repo.retrieveWorkouts();
+    workouts.forEach((element) => workoutMap[element.id!] = element);
+    _generateWorkoutList();
     updateBloc();
   }
 
@@ -46,53 +38,28 @@ class WorkoutBloc extends Bloc {
     }
 
     searchTerm = actualSearch;
-    _generateWorkoutLists();
+    _generateWorkoutList();
     updateBloc();
   }
 
   /// Runs [_generatePreCreatedWorkoutList] and [_generateUserCreatedWorkoutList].
-  /// Repopulates the workout lists ([preCreatedWorkoutList] and [userCreatedWorkoutList]) using their respective maps ([preCreatedWorkoutMap] and [userCreatedWorkoutMap]) as reference.
+  /// Repopulates the workout lists ([preCreatedWorkoutList] and [userCreatedWorkoutList]) using [workoutMap] as reference.
   /// This will take into account the given [searchTerm].
-  void _generateWorkoutLists() {
-    _generatePreCreatedWorkoutList();
-    _generateUserCreatedWorkoutList();
-  }
-
-  /// Runs [_generateWorkoutList] using [preCreatedWorkoutList] and [preCreatedWorkoutMap].
-  /// Repopulates [preCreatedWorkoutList] in the correct order using [preCreatedWorkoutMap] as a reference.
-  /// This will take into account the given [searchTerm].
-  void _generatePreCreatedWorkoutList() =>
-      _generateWorkoutList(preCreatedWorkoutList, preCreatedWorkoutMap);
-
-  /// Runs [_generateWorkoutList] using [userCreatedWorkoutList] and [userCreatedWorkoutMap].
-  /// Repopulates [userCreatedWorkoutList] in the correct order using [userCreatedWorkoutMap] as a reference.
-  /// This will take into account the given [searchTerm].
-  void _generateUserCreatedWorkoutList() =>
-      _generateWorkoutList(userCreatedWorkoutList, userCreatedWorkoutMap);
-
-  /// Repopulates [workoutList] in the correct order using [workoutMap] as a reference.
-  /// This will take into account the given [searchTerm]
-  void _generateWorkoutList(
-    List<int> workoutList,
-    Map<int, Workout> workoutMap,
-  ) {
+  void _generateWorkoutList() {
     workoutList.clear();
     if (searchTerm == null) {
-      _addWorkoutsSorted(workoutMap.values, workoutList);
+      _addWorkoutsSorted(workoutMap.values);
       return;
     }
 
     final search = _searchMeUp.rankedSearch(searchTerm!, workoutMap.values);
-    search.forEach((workouts) => _addWorkoutsSorted(workouts, workoutList));
+    search.forEach(_addWorkoutsSorted);
   }
 
   /// Will sort the [workouts] and then add them to the [workoutIDList]
-  void _addWorkoutsSorted(
-    Iterable<Workout> workouts,
-    List<int> workoutIDList,
-  ) {
+  void _addWorkoutsSorted(Iterable<Workout> workouts) {
     final sortedWorkouts = workouts.toList()
       ..sort((a, b) => a.name!.compareTo(b.name!));
-    workoutIDList.addAll(sortedWorkouts.map((val) => val.id!));
+    workoutList.addAll(sortedWorkouts.map((val) => val.id!));
   }
 }

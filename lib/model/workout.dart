@@ -59,8 +59,9 @@ class Workout implements GenericModel {
   String? name;
   int? id;
   String? customMessage;
+  bool userMade;
 
-  Workout({this.name, this.id});
+  Workout({this.name, this.id, this.userMade = true});
 
   @override
   void loadFromMap(Map<String, dynamic> map) {

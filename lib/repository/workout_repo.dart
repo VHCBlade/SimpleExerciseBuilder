@@ -2,8 +2,7 @@ import 'package:event_bloc/event_bloc.dart';
 import 'package:simple_exercise_builder/model/workout.dart';
 
 abstract class WorkoutRepository extends Repository {
-  Future<Iterable<Workout>> retrievePreCreatedWorkouts();
-  Future<Iterable<Workout>> retrieveUserCreatedWorkouts();
+  Future<Iterable<Workout>> retrieveWorkouts();
   Future<Workout> retrieveWorkout(int id);
   Future<void> addWorkout(Workout w);
   Future<void> updateWorkout(Workout w);
@@ -24,17 +23,38 @@ class DevWorkoutRepository extends WorkoutRepository {
   }
 
   @override
-  Future<Iterable<Workout>> retrievePreCreatedWorkouts() async {
-    var incrementer = 0;
-    // TODO
-    return [];
-  }
+  Future<Iterable<Workout>> retrieveWorkouts() async {
+    final workoutA = Workout(
+      id: -1,
+      name: 'Premade Workout 1',
+      userMade: false,
+    );
 
-  @override
-  Future<Iterable<Workout>> retrieveUserCreatedWorkouts() async {
-    var incrementer = 0;
-    // TODO
-    return [];
+    final workoutB = Workout(
+      id: -2,
+      name: 'Premade Workout 2',
+      userMade: false,
+    );
+
+    final workoutC = Workout(
+      id: -3,
+      name: 'Premade Workout 3',
+      userMade: false,
+    );
+
+    final workoutD = Workout(
+      id: 0,
+      name: 'User Workout 1',
+      userMade: true,
+    );
+
+    final workoutE = Workout(
+      id: 1,
+      name: 'User Workout 2',
+      userMade: true,
+    );
+
+    return [workoutA, workoutB, workoutC, workoutD, workoutE];
   }
 
   @override

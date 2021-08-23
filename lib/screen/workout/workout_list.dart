@@ -6,7 +6,7 @@ import 'package:simple_exercise_builder/model/workout.dart';
 import 'package:simple_exercise_builder/screen/workout/search_bar.dart';
 import 'package:simple_exercise_builder/screen/workout/workout_category_list.dart';
 
-class WorkoutList extends StatelessWidget {
+class WorkoutList extends StatefulWidget {
   final void Function(Workout exercise)? action;
   final bool enableAdding;
   final bool enableModifying;
@@ -18,6 +18,13 @@ class WorkoutList extends StatelessWidget {
     this.enableModifying = true,
   }) : super(key: key);
 
+  @override
+  _WorkoutListState createState() => _WorkoutListState();
+}
+
+class _WorkoutListState extends State<WorkoutList> {
+  bool editMode = false;
+
   void createWorkout() {
     // TODO
   }
@@ -25,6 +32,16 @@ class WorkoutList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.watch<WorkoutBloc>(context);
+    final workoutMap = bloc.workoutMap;
+    final userMadeWorkouts = bloc.workoutList
+        .where((workout) =>
+            workoutMap[workout] != null && workoutMap[workout]!.userMade)
+        .toList();
+    final preMadeWorkouts = bloc.workoutList
+        .where((workout) =>
+            workoutMap[workout] != null && !workoutMap[workout]!.userMade)
+        .toList();
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(title: const Text('Workouts')),
@@ -34,24 +51,24 @@ class WorkoutList extends StatelessWidget {
           SliverList(
             delegate: SliverChildListDelegate([
               WorkoutCategoryGroup(
-                action: action,
+                action: widget.action,
                 category: 'Your Workouts',
-                workoutIDList: bloc.userCreatedWorkoutList,
-                workoutMap: bloc.userCreatedWorkoutMap,
-                enableModifying: enableModifying,
+                workoutIDList: userMadeWorkouts,
+                workoutMap: workoutMap,
+                editMode: editMode,
               ),
               WorkoutCategoryGroup(
-                action: action,
+                action: widget.action,
                 category: 'Try These Workouts',
-                workoutIDList: bloc.preCreatedWorkoutList,
-                workoutMap: bloc.preCreatedWorkoutMap,
-                enableModifying: false,
+                workoutIDList: preMadeWorkouts,
+                workoutMap: workoutMap,
+                editMode: editMode,
               ),
             ]),
           )
         ],
       ),
-      floatingActionButton: enableAdding
+      floatingActionButton: widget.enableAdding
           ? FloatingActionButton(
               onPressed: createWorkout,
               child: const Icon(Icons.add),
@@ -66,7 +83,7 @@ class WorkoutCategoryGroup extends StatefulWidget {
   final String category;
   final List<int> workoutIDList;
   final Map<int, Workout> workoutMap;
-  final bool enableModifying;
+  final bool editMode;
 
   const WorkoutCategoryGroup({
     Key? key,
@@ -74,7 +91,7 @@ class WorkoutCategoryGroup extends StatefulWidget {
     required this.category,
     required this.workoutIDList,
     required this.workoutMap,
-    required this.enableModifying,
+    required this.editMode,
   }) : super(key: key);
 
   @override
