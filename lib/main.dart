@@ -1,10 +1,10 @@
 import 'package:event_bloc/event_bloc.dart';
+import 'package:event_navigation/event_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_exercise_builder/bloc/navigation/navigation.dart';
 import 'package:simple_exercise_builder/bloc_layer.dart';
 import 'package:simple_exercise_builder/repository_layer.dart';
 import 'package:simple_exercise_builder/screen/main.dart';
-import 'package:simple_exercise_builder/widget/navigation.dart';
 
 void main() {
   runApp(MyApp());
@@ -38,7 +38,7 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final navBloc = BlocProvider.watch<MainNavigationBloc>(context);
+    final navBloc = BlocProvider.watch<MainNavigationBloc<String>>(context);
     final navigationBar = MainNavigationBar(
       currentNavigation: navBloc.currentMainNavigation,
       navigationPossibilities: const [

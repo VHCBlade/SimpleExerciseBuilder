@@ -1,4 +1,5 @@
 import 'package:event_bloc/event_bloc.dart';
+import 'package:event_navigation/event_navigation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_exercise_builder/bloc/counter.dart';
@@ -15,8 +16,7 @@ class BlocLayer extends StatelessWidget {
     return BlocProvider(
       create: (_, parentChannel) => CounterBloc(parentChannel: parentChannel),
       child: BlocProvider(
-        create: (_, parentChannel) =>
-            MainNavigationBloc(parentChannel: parentChannel),
+        create: (_, parentChannel) => generateNavigationBloc(),
         child: BlocProvider(
             create: (context, parentChannel) => ExerciseBloc(
                 parentChannel: parentChannel,
