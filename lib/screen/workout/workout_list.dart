@@ -74,7 +74,7 @@ class _WorkoutListState extends State<WorkoutList> {
 }
 
 class WorkoutCategoryGroup extends StatefulWidget {
-  final void Function(Workout exercise)? action;
+  final void Function(Workout)? action;
   final String category;
   final List<Workout> workouts;
   final bool editMode;
@@ -132,6 +132,7 @@ class _WorkoutCategoryGroupState extends State<WorkoutCategoryGroup>
                 child: WorkoutCategoryList(
                   workouts: widget.workouts,
                   editMode: widget.editMode,
+                  action: widget.action,
                 ),
               ),
             ),
