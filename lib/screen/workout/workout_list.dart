@@ -33,14 +33,11 @@ class _WorkoutListState extends State<WorkoutList> {
   Widget build(BuildContext context) {
     final bloc = BlocProvider.watch<WorkoutBloc>(context);
     final workoutMap = bloc.workoutMap;
-    final userMadeWorkouts = bloc.workoutList
-        .where((workout) =>
-            workoutMap[workout] != null && workoutMap[workout]!.userMade)
-        .toList();
-    final preMadeWorkouts = bloc.workoutList
-        .where((workout) =>
-            workoutMap[workout] != null && !workoutMap[workout]!.userMade)
-        .toList();
+    final workoutList = bloc.workoutList
+        .map((workoutID) => workoutMap[workoutID])
+        .where((workout) => workout != null);
+    final userMadeWorkouts = workoutList.where((workout) => workout!.userMade);
+    final preMadeWorkouts = workoutList.where((workout) => !workout!.userMade);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -53,15 +50,13 @@ class _WorkoutListState extends State<WorkoutList> {
               WorkoutCategoryGroup(
                 action: widget.action,
                 category: 'Your Workouts',
-                workoutIDList: userMadeWorkouts,
-                workoutMap: workoutMap,
+                workouts: List.from(userMadeWorkouts),
                 editMode: editMode,
               ),
               WorkoutCategoryGroup(
                 action: widget.action,
                 category: 'Try These Workouts',
-                workoutIDList: preMadeWorkouts,
-                workoutMap: workoutMap,
+                workouts: List.from(preMadeWorkouts),
                 editMode: editMode,
               ),
             ]),
@@ -81,16 +76,14 @@ class _WorkoutListState extends State<WorkoutList> {
 class WorkoutCategoryGroup extends StatefulWidget {
   final void Function(Workout exercise)? action;
   final String category;
-  final List<int> workoutIDList;
-  final Map<int, Workout> workoutMap;
+  final List<Workout> workouts;
   final bool editMode;
 
   const WorkoutCategoryGroup({
     Key? key,
     required this.action,
     required this.category,
-    required this.workoutIDList,
-    required this.workoutMap,
+    required this.workouts,
     required this.editMode,
   }) : super(key: key);
 
@@ -128,15 +121,18 @@ class _WorkoutCategoryGroupState extends State<WorkoutCategoryGroup>
           children: [
             WorkoutCategoryHeader(
               animation: animation,
-              label: '${widget.category} (${widget.workoutIDList.length})',
+              label: '${widget.category} (${widget.workouts.length})',
               onExpand: () => setState(() => isExpanded = !isExpanded),
             ),
             SizeTransition(
               axisAlignment: -1,
               sizeFactor: animation,
-              child: const Padding(
-                padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
-                child: WorkoutCategoryList(),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                child: WorkoutCategoryList(
+                  workouts: widget.workouts,
+                  editMode: widget.editMode,
+                ),
               ),
             ),
           ],
