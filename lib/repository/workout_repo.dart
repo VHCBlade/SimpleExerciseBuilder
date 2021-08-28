@@ -10,20 +10,41 @@ abstract class WorkoutRepository extends Repository {
 }
 
 class DevWorkoutRepository extends WorkoutRepository {
+  List<Workout> _workouts = [];
+  int _index = 0;
+
   @override
   Future<void> addWorkout(Workout w) async {
-    // TODO: implement addWorkout
-    throw UnimplementedError();
+    w.id = _index++;
+    _workouts.add(w);
   }
 
   @override
   Future<void> deleteWorkout(Workout w) async {
-    // TODO: implement deleteWorkout
-    throw UnimplementedError();
+    _workouts.remove(w);
   }
 
   @override
   Future<Iterable<Workout>> retrieveWorkouts() async {
+    if (_workouts.isEmpty) {
+      _generateTestWorkout();
+    }
+
+    return _workouts;
+  }
+
+  @override
+  Future<Workout> retrieveWorkout(int id) async {
+    return _workouts.firstWhere((element) => element.id == id);
+  }
+
+  @override
+  Future<void> updateWorkout(Workout w) async {
+    final index = _workouts.indexWhere((element) => element.id == w.id);
+    _workouts[index] = w;
+  }
+
+  void _generateTestWorkout() {
     final workoutA = Workout(
       id: -1,
       name: 'Premade Workout 1',
@@ -43,29 +64,18 @@ class DevWorkoutRepository extends WorkoutRepository {
     );
 
     final workoutD = Workout(
-      id: 0,
       name: 'User Workout 1',
       userMade: true,
     );
 
     final workoutE = Workout(
-      id: 1,
       name: 'User Workout 2',
       userMade: true,
     );
 
-    return [workoutA, workoutB, workoutC, workoutD, workoutE];
-  }
+    _workouts = [workoutA, workoutB, workoutC];
 
-  @override
-  Future<Workout> retrieveWorkout(int id) async {
-    // TODO: implement retrieveWorkout
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> updateWorkout(Workout w) async {
-    // TODO: implement updateWorkout
-    throw UnimplementedError();
+    addWorkout(workoutD);
+    addWorkout(workoutE);
   }
 }
