@@ -26,6 +26,7 @@ class WorkoutBloc extends Bloc {
   /// This will load the workouts from the [repo]
   void loadWorkouts() async {
     final workouts = await repo.retrieveWorkouts();
+    workoutMap.clear();
     workouts.forEach((element) => workoutMap[element.id!] = element);
     _generateWorkoutList();
     updateBloc();
@@ -51,7 +52,19 @@ class WorkoutBloc extends Bloc {
     );
 
     loadWorkouts();
-    updateBloc();
+  }
+
+  void deleteWorkout(Workout workout) async {
+    await repo.deleteWorkout(workout);
+    loadWorkouts();
+  }
+
+  void duplicateWorkout(Workout workout) async {
+    final clone = Workout();
+    clone.loadFromMap(workout.toMap());
+    clone.name = 'Copy of ${clone.name}';
+    await repo.addWorkout(clone);
+    loadWorkouts();
   }
 
   /// Runs [_generatePreCreatedWorkoutList] and [_generateUserCreatedWorkoutList].

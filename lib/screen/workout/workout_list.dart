@@ -35,9 +35,29 @@ class _WorkoutListState extends State<WorkoutList> {
     final userMadeWorkouts = workoutList.where((workout) => workout!.userMade);
     final preMadeWorkouts = workoutList.where((workout) => !workout!.userMade);
 
+    final appBarActions = <Widget>[];
+
+    if (widget.enableModifying && !editMode) {
+      appBarActions.add(
+        IconButton(
+          onPressed: () => setState(() => editMode = true),
+          icon: const Icon(Icons.edit),
+        ),
+      );
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(title: const Text('Workouts')),
+      appBar: AppBar(
+        title: const Text('Workouts'),
+        actions: appBarActions,
+        leading: editMode
+            ? IconButton(
+                onPressed: () => setState(() => editMode = false),
+                icon: const Icon(Icons.check),
+              )
+            : null,
+      ),
       body: CustomScrollView(
         slivers: [
           SliverPersistentHeader(floating: true, delegate: WorkoutSearchBar()),
