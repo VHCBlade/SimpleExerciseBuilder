@@ -42,6 +42,18 @@ class WorkoutBloc extends Bloc {
     updateBloc();
   }
 
+  void addNewWorkout() async {
+    await repo.addWorkout(
+      Workout(
+        name: 'New Workout',
+        userMade: true,
+      ),
+    );
+
+    loadWorkouts();
+    updateBloc();
+  }
+
   /// Runs [_generatePreCreatedWorkoutList] and [_generateUserCreatedWorkoutList].
   /// Repopulates the workout lists ([preCreatedWorkoutList] and [userCreatedWorkoutList]) using [workoutMap] as reference.
   /// This will take into account the given [searchTerm].

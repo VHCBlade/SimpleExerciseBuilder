@@ -25,10 +25,6 @@ class WorkoutList extends StatefulWidget {
 class _WorkoutListState extends State<WorkoutList> {
   bool editMode = false;
 
-  void createWorkout() {
-    // TODO
-  }
-
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.watch<WorkoutBloc>(context);
@@ -63,9 +59,9 @@ class _WorkoutListState extends State<WorkoutList> {
           )
         ],
       ),
-      floatingActionButton: widget.enableAdding
+      floatingActionButton: (widget.enableAdding && bloc.searchTerm == null)
           ? FloatingActionButton(
-              onPressed: createWorkout,
+              onPressed: () => bloc.addNewWorkout(),
               child: const Icon(Icons.add),
             )
           : null,
