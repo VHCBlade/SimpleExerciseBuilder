@@ -44,28 +44,28 @@ class SelectedWorkout extends StatelessWidget {
                 Text(
                   workoutName,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.headline5,
                 ),
                 Text(
                   "$workoutDurationDisplayText Total",
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 18,
-                  ),
                 ),
                 Column(
                   children: [
                     const Text("Equipment:"),
-                    Text(workoutEquipmentDisplayText),
+                    Text(
+                      workoutEquipmentDisplayText,
+                      textAlign: TextAlign.center,
+                    ),
                   ],
                 ),
                 Column(
                   children: [
                     const Text("Muscle Groups:"),
-                    Text(workoutMuscleGroupsDisplayText),
+                    Text(
+                      workoutMuscleGroupsDisplayText,
+                      textAlign: TextAlign.center,
+                    ),
                   ],
                 ),
               ],

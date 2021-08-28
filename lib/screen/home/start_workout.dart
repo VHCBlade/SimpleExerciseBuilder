@@ -9,26 +9,21 @@ class StartWorkout extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Expanded(
+        Expanded(
           flex: 1,
           child: Center(
             child: Text(
               "Ready to break some sweat?",
-              style: TextStyle(
-                fontSize: 20,
-              ),
+              style: Theme.of(context).textTheme.headline6,
             ),
           ),
         ),
         Expanded(
           flex: 3,
           child: ElevatedButton(
-            child: const Text(
+            child: Text(
               "Let's Go!",
-              style: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.headline2,
             ),
             onPressed: () {},
           ),
