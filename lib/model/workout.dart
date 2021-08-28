@@ -1,5 +1,10 @@
+import 'package:event_bloc/event_bloc.dart';
+import 'package:flutter/material.dart';
+
 import 'package:simple_exercise_builder/model/enum.dart';
 import 'package:simple_exercise_builder/model/generic.dart';
+import 'package:simple_exercise_builder/model/exercise.dart';
+import 'package:simple_exercise_builder/bloc/exercise/exercise.dart';
 
 /// Wourkout Exercise details stored within a workout.
 class WorkoutExercise implements GenericModel {
@@ -10,6 +15,7 @@ class WorkoutExercise implements GenericModel {
   static const REST_BETWEEN_SETS = 'in-rest';
   static const AFTER_REST = 'post-rest';
 
+  BuildContext? context;
   int? exerciseId;
   int? equipmentUsed;
   int? setCount;
@@ -17,22 +23,48 @@ class WorkoutExercise implements GenericModel {
   int? restBetween;
   int? restAfter;
 
+  ExerciseBloc? exerciseBloc;
+
   WorkoutExercise({
+    this.context,
     this.exerciseId,
     this.equipmentUsed,
     this.setCount,
     this.time,
     this.restBetween,
     this.restAfter,
-  });
+  }) {
+    if (context != null) {
+      exerciseBloc = BlocProvider.read<ExerciseBloc>(context!);
+    }
+  }
+
+  Exercise get exercise {
+    if (exerciseId == null) {
+      throw ArgumentError(
+          'Exercise ID on Workout Exercise must not be null on runtime');
+    }
+    if (!exerciseBloc!.exerciseMap.containsKey(exerciseId)) {
+      throw ArgumentError('Exercise ID on Workout Exercise is not on Bloc');
+    }
+
+    return exerciseBloc!.exerciseMap[exerciseId]!;
+  }
 
   // TODO: Make a better implementation on getting just one equipment name from bitwise value
+  // TODO: Validate equipment using repo?
   String get equipmentUsedDisplayName => equipmentUsed == null
       ? throw ArgumentError(
-          'Equipment used on Workout exercise must not be null on runtime')
+          'Equipment on Workout Exercise must not be null on runtime')
       : convertIntToExerciseEquipment(equipmentUsed!)
           .toList()[0]
           .getDisplayText();
+
+  List<String> get muscleGroupDisplayNames {
+    return exercise.muscleGroupsSet
+        .map((muscleGroup) => muscleGroup.getDisplayText())
+        .toList();
+  }
 
   int get totalTime {
     if (time == null) {
@@ -82,14 +114,15 @@ class Workout implements GenericModel {
   static const NAME = 'name';
   static const CUSTOM_MESSAGE = 'custom_message';
 
+  BuildContext? context;
   List<WorkoutExercise> exerciseList = [];
   String? name;
   int? id;
   String? customMessage;
 
-  Workout({this.name, this.id});
+  Workout({this.context, this.name, this.id});
 
-  Workout.fromMap(Map<String, dynamic> map) {
+  Workout.fromMap(this.context, Map<String, dynamic> map) {
     loadFromMap(map);
   }
 
@@ -103,6 +136,7 @@ class Workout implements GenericModel {
     if (exerciseList.isEmpty) {
       return [ExerciseEquipment.none.getDisplayText()];
     }
+
     final workoutEquipment = exerciseList
         .map((exer) => exer.equipmentUsedDisplayName)
         .toSet()
@@ -111,14 +145,28 @@ class Workout implements GenericModel {
     return workoutEquipment;
   }
 
+  List<String> get muscleGroups {
+    if (exerciseList.isEmpty) {
+      return [];
+    }
+
+    final muscleGroups = exerciseList
+        .map((exer) => exer.muscleGroupDisplayNames)
+        .expand((muscles) => muscles)
+        .toSet()
+        .toList();
+    return muscleGroups;
+  }
+
   @override
   void loadFromMap(Map<String, dynamic> map) {
     name = map[NAME];
     id = map[WORKOUT_ID];
     customMessage = map[CUSTOM_MESSAGE];
     final List<Map<String, dynamic>> rawExercises = map[EXERCISE_LIST];
-    exerciseList =
-        rawExercises.map((val) => WorkoutExercise()..loadFromMap(val)).toList();
+    exerciseList = rawExercises
+        .map((val) => WorkoutExercise(context: context)..loadFromMap(val))
+        .toList();
   }
 
   @override
