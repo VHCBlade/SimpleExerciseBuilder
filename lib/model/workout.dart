@@ -53,12 +53,24 @@ class WorkoutExercise implements GenericModel {
 
   // TODO: Make a better implementation on getting just one equipment name from bitwise value
   // TODO: Validate equipment using repo?
-  String get equipmentUsedDisplayName => equipmentUsed == null
-      ? throw ArgumentError(
-          'Equipment on Workout Exercise must not be null on runtime')
-      : convertIntToExerciseEquipment(equipmentUsed!)
-          .toList()[0]
-          .getDisplayText();
+  String get equipmentUsedDisplayName {
+    if (equipmentUsed == null) {
+      throw ArgumentError(
+          'Equipment on Workout Exercise must not be null on runtime');
+    }
+    if (exercise.availableExercises == null) {
+      throw ArgumentError(
+          'Equipment of Exercise of Workout Exercise must not be null on runtime.');
+    }
+    if ((equipmentUsed! & exercise.availableExercises!) == 0) {
+      throw ArgumentError(
+          'Equipment of Workout Exercise is not available in Exercise.');
+    }
+
+    return convertIntToExerciseEquipment(equipmentUsed!)
+        .toList()[0]
+        .getDisplayText();
+  }
 
   List<String> get muscleGroupDisplayNames {
     return exercise.muscleGroupsSet

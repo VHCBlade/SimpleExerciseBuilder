@@ -66,7 +66,7 @@ class HomeScreen extends StatelessWidget {
                 horizontal: 30,
                 vertical: 120,
               ),
-              child: SelectedWorkout(
+              child: SelectedWorkoutWidget(
                 workoutName: workout.name!,
                 workoutDuration: workout.totalTime,
                 workoutEquipment: workout.equipmentUsed,
@@ -76,7 +76,7 @@ class HomeScreen extends StatelessWidget {
           ),
           const Expanded(
             flex: 1,
-            child: StartWorkout(),
+            child: StartWorkoutWidget(),
           ),
         ],
       ),

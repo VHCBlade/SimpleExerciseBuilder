@@ -1,13 +1,13 @@
 import 'package:event_bloc/event_bloc.dart';
 import 'package:flutter/material.dart';
 
-class SelectedWorkout extends StatelessWidget {
+class SelectedWorkoutWidget extends StatelessWidget {
   final String workoutName;
   final int workoutDuration;
   final List<String> workoutEquipment;
   final List<String> workoutMuscleGroups;
 
-  const SelectedWorkout({
+  const SelectedWorkoutWidget({
     Key? key,
     required this.workoutName,
     required this.workoutDuration,
