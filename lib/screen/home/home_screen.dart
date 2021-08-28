@@ -62,11 +62,9 @@ class HomeScreen extends StatelessWidget {
           Expanded(
             flex: 4,
             child: Container(
-              margin: const EdgeInsets.only(
-                left: 30,
-                right: 30,
-                top: 120,
-                bottom: 120,
+              margin: const EdgeInsets.symmetric(
+                horizontal: 30,
+                vertical: 120,
               ),
               child: SelectedWorkout(
                 workoutName: workout.name!,
