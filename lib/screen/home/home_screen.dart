@@ -10,7 +10,7 @@ import 'package:simple_exercise_builder/screen/home/start_workout.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
-  static Workout getSelectedWorkout(BuildContext context) {
+  Workout getSelectedWorkout(BuildContext context) {
     return Workout.fromMap(context, {
       Workout.WORKOUT_ID: 0,
       Workout.NAME: "Haron's Workout",

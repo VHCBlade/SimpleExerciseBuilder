@@ -29,13 +29,20 @@ class SelectedWorkout extends StatelessWidget {
           Radius.circular(10),
         ),
       ),
-      child: Container(
+      child: Padding(
         padding: const EdgeInsets.all(10),
         child: Stack(
           children: [
-            const Align(
-              alignment: Alignment.topRight,
-              child: Icon(Icons.edit),
+            GestureDetector(
+              onTap: () {},
+              child: const Expanded(
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Icon(
+                    Icons.edit,
+                  ),
+                ),
+              ),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
