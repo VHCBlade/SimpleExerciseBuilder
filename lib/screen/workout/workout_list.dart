@@ -6,12 +6,12 @@ import 'package:simple_exercise_builder/model/workout.dart';
 import 'package:simple_exercise_builder/screen/workout/search_bar.dart';
 import 'package:simple_exercise_builder/screen/workout/workout_category_list.dart';
 
-class WorkoutList extends StatefulWidget {
+class WorkoutListScreen extends StatefulWidget {
   final void Function(Workout exercise)? action;
   final bool enableAdding;
   final bool enableModifying;
 
-  const WorkoutList({
+  const WorkoutListScreen({
     Key? key,
     this.action,
     this.enableAdding = true,
@@ -19,10 +19,10 @@ class WorkoutList extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _WorkoutListState createState() => _WorkoutListState();
+  _WorkoutListScreenState createState() => _WorkoutListScreenState();
 }
 
-class _WorkoutListState extends State<WorkoutList> {
+class _WorkoutListScreenState extends State<WorkoutListScreen> {
   bool editMode = false;
 
   @override

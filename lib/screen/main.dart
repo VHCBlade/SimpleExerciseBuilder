@@ -68,9 +68,9 @@ class _MainScreenState extends State<MainScreen> {
         // Home
         PlaceholderScreen(),
         // Workout
-        WorkoutList(),
+        WorkoutListScreen(),
         // Exercise
-        ExerciseList(),
+        ExerciseListScreen(),
         // Settings
         PlaceholderScreen()
       ],
