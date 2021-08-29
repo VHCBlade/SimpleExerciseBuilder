@@ -6,10 +6,10 @@ import 'package:simple_exercise_builder/model/workout.dart';
 class WorkoutCategoryList extends StatelessWidget {
   final List<Workout> workouts;
   final bool editMode;
-  final void Function(Workout)? action;
+  final void Function(Workout) action;
   const WorkoutCategoryList({
     Key? key,
-    this.action,
+    required this.action,
     required this.workouts,
     required this.editMode,
   }) : super(key: key);
@@ -68,7 +68,7 @@ class WorkoutCategoryList extends StatelessWidget {
               '${workout.totalTime.inMinutes} min',
               style: const TextStyle(fontWeight: FontWeight.w300),
             ),
-            onTap: () => action == null ? null : action!(workout),
+            onTap: () => action(workout),
           ),
         );
       }).toList(),

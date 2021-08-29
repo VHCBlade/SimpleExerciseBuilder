@@ -148,7 +148,7 @@ class _WorkoutCategoryGroupState extends State<WorkoutCategoryGroup>
                 child: WorkoutCategoryList(
                   workouts: widget.workouts,
                   editMode: widget.editMode,
-                  action: widget.action,
+                  action: widget.action ?? (_) {},
                 ),
               ),
             ),
