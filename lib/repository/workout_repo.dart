@@ -10,7 +10,7 @@ abstract class WorkoutRepository extends Repository {
 }
 
 class DevWorkoutRepository extends WorkoutRepository {
-  List<Workout> _workouts = [];
+  final _workouts = <Workout>[];
   int _index = 0;
 
   @override
@@ -73,7 +73,9 @@ class DevWorkoutRepository extends WorkoutRepository {
       userMade: true,
     );
 
-    _workouts = [workoutA, workoutB, workoutC];
+    _workouts.add(workoutA);
+    _workouts.add(workoutB);
+    _workouts.add(workoutC);
 
     addWorkout(workoutD);
     addWorkout(workoutE);

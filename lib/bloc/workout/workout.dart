@@ -19,8 +19,8 @@ class WorkoutBloc extends Bloc {
   WorkoutBloc({BlocEventChannel? parentChannel, required this.repo})
       : eventChannel = BlocEventChannel(parentChannel);
 
-  List<int> workoutList = [];
-  Map<int, Workout> workoutMap = {};
+  final workoutList = <int>[];
+  final workoutMap = <int, Workout>{};
   String? searchTerm;
 
   /// This will load the workouts from the [repo]

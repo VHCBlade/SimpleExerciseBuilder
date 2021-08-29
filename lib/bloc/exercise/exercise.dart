@@ -16,8 +16,8 @@ class ExerciseBloc extends Bloc {
   ExerciseBloc({BlocEventChannel? parentChannel, required this.repo})
       : eventChannel = BlocEventChannel(parentChannel);
 
-  List<int> exerciseList = [];
-  Map<int, Exercise> exerciseMap = {};
+  final exerciseList = <int>[];
+  final exerciseMap = <int, Exercise>{};
   Exercise? selectedExercise;
   String? searchTerm;
 
