@@ -65,7 +65,7 @@ class WorkoutCategoryList extends StatelessWidget {
             trailing: trailingWidget,
             title: Text(workout.name!, style: theme.textTheme.headline6),
             subtitle: Text(
-              '${(workout.totalTime / 60).floor()} min',
+              '${workout.totalTime.inMinutes} min',
               style: const TextStyle(fontWeight: FontWeight.w300),
             ),
             onTap: () => action == null ? null : action!(workout),

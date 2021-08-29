@@ -48,10 +48,11 @@ class WorkoutExercise implements GenericModel {
   @override
   int get typeId => 1;
 
-  int get totalTime =>
-      ((time ?? 0) * (setCount ?? 1)) +
-      ((restBetween ?? 0) * ((setCount ?? 1) - 1)) +
-      (restAfter ?? 0);
+  Duration get totalTime => Duration(
+        seconds: ((time ?? 0) * (setCount ?? 1)) +
+            ((restBetween ?? 0) * ((setCount ?? 1) - 1)) +
+            (restAfter ?? 0),
+      );
 }
 
 class Workout implements GenericModel {
@@ -87,6 +88,8 @@ class Workout implements GenericModel {
   @override
   int get typeId => 2;
 
-  int get totalTime => exerciseList.fold(
-      0, (sum, workoutExercise) => sum + workoutExercise.totalTime);
+  Duration get totalTime => exerciseList.fold(
+        Duration.zero,
+        (sum, workoutExercise) => sum + workoutExercise.totalTime,
+      );
 }
