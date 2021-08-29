@@ -51,11 +51,14 @@ class WorkoutBloc extends Bloc {
       ),
     );
 
+    // TODO: optimize to add to workoutMap directly
     loadWorkouts();
   }
 
   void deleteWorkout(Workout workout) async {
     await repo.deleteWorkout(workout);
+
+    // TODO: optimize to delete from workoutMap directly
     loadWorkouts();
   }
 
@@ -64,6 +67,8 @@ class WorkoutBloc extends Bloc {
     clone.loadFromMap(workout.toMap());
     clone.name = 'Copy of ${clone.name}';
     await repo.addWorkout(clone);
+
+    // TODO: optimize to add to workoutMap directly
     loadWorkouts();
   }
 
