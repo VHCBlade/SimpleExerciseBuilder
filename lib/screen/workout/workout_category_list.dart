@@ -25,44 +25,33 @@ class WorkoutCategoryList extends StatelessWidget {
 
     return Column(
       children: workouts.map((workout) {
-        Widget trailingWidget;
-
-        if (editMode) {
-          final editButtons = <Widget>[];
-
-          editButtons.add(IconButton(
-            onPressed: () => bloc.duplicateWorkout(workout),
-            icon: const Icon(Icons.copy),
-          ));
-
-          editButtons.add(
-            Visibility(
-              child: IconButton(
-                onPressed: () => bloc.deleteWorkout(workout),
-                icon: const Icon(Icons.delete),
-              ),
-              visible: workout.userMade,
-              maintainSize: true,
-              maintainState: true,
-              maintainAnimation: true,
-            ),
-          );
-
-          trailingWidget = Row(
-            children: editButtons,
-            mainAxisAlignment: MainAxisAlignment.end,
-            mainAxisSize: MainAxisSize.min,
-          );
-        } else {
-          trailingWidget = IconButton(
-            onPressed: () => viewWorkout(workout),
-            icon: const Icon(Icons.chevron_right),
-          );
-        }
-
         return Card(
           child: ListTile(
-            trailing: trailingWidget,
+            trailing: editMode
+                ? Row(
+                    children: [
+                      IconButton(
+                        onPressed: () => bloc.duplicateWorkout(workout),
+                        icon: const Icon(Icons.copy),
+                      ),
+                      Visibility(
+                        child: IconButton(
+                          onPressed: () => bloc.deleteWorkout(workout),
+                          icon: const Icon(Icons.delete),
+                        ),
+                        visible: workout.userMade,
+                        maintainSize: true,
+                        maintainState: true,
+                        maintainAnimation: true,
+                      )
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                  )
+                : IconButton(
+                    onPressed: () => viewWorkout(workout),
+                    icon: const Icon(Icons.chevron_right),
+                  ),
             title: Text(workout.name!, style: theme.textTheme.headline6),
             subtitle: Text(
               '${workout.totalTime.inMinutes} min',

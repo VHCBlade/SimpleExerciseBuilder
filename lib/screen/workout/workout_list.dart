@@ -50,7 +50,13 @@ class _WorkoutListState extends State<WorkoutList> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Workouts'),
-        actions: appBarActions,
+        actions: [
+          if (widget.enableModifying && !editMode)
+            IconButton(
+              onPressed: () => setState(() => editMode = true),
+              icon: const Icon(Icons.edit),
+            ),
+        ],
         leading: editMode
             ? IconButton(
                 onPressed: () => setState(() => editMode = false),
