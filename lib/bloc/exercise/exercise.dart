@@ -16,8 +16,8 @@ class ExerciseBloc extends Bloc {
   ExerciseBloc({BlocEventChannel? parentChannel, required this.repo})
       : eventChannel = BlocEventChannel(parentChannel);
 
-  List<int> exerciseList = [];
-  Map<int, Exercise> exerciseMap = {};
+  final exerciseList = <int>[];
+  final exerciseMap = <int, Exercise>{};
   Exercise? selectedExercise;
   String? searchTerm;
 
@@ -51,16 +51,16 @@ class ExerciseBloc extends Bloc {
   void _generateExerciseList() {
     exerciseList.clear();
     if (searchTerm == null) {
-      _addExercisesSorted(exerciseMap.values);
+      _sortExercisesThenAdd(exerciseMap.values);
       return;
     }
 
     final search = _searchMeUp.rankedSearch(searchTerm!, exerciseMap.values);
-    search.forEach(_addExercisesSorted);
+    search.forEach(_sortExercisesThenAdd);
   }
 
   /// Will sort the [exercises] and then add them to the [exerciseList]
-  void _addExercisesSorted(Iterable<Exercise> exercises) {
+  void _sortExercisesThenAdd(Iterable<Exercise> exercises) {
     final sortedExercises = exercises.toList()
       ..sort((a, b) => a.name!.compareTo(b.name!));
     exerciseList.addAll(sortedExercises.map((val) => val.id!));

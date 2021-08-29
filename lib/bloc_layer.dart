@@ -3,8 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_exercise_builder/bloc/counter.dart';
 import 'package:simple_exercise_builder/bloc/exercise/exercise.dart';
+import 'package:simple_exercise_builder/bloc/workout/workout.dart';
 import 'package:simple_exercise_builder/bloc/navigation/navigation.dart';
 import 'package:simple_exercise_builder/repository/exercise_repo.dart';
+import 'package:simple_exercise_builder/repository/workout_repo.dart';
 
 class BlocLayer extends StatelessWidget {
   final Widget child;
@@ -18,11 +20,17 @@ class BlocLayer extends StatelessWidget {
         create: (_, parentChannel) =>
             MainNavigationBloc(parentChannel: parentChannel),
         child: BlocProvider(
-            create: (context, parentChannel) => ExerciseBloc(
-                parentChannel: parentChannel,
-                repo: context.read<ExerciseRepository>())
-              ..loadExercises(),
-            child: child),
+          create: (context, parentChannel) => ExerciseBloc(
+              parentChannel: parentChannel,
+              repo: context.read<ExerciseRepository>())
+            ..loadExercises(),
+          child: BlocProvider(
+              create: (context, parentChannel) => WorkoutBloc(
+                    parentChannel: parentChannel,
+                    repo: context.read<WorkoutRepository>(),
+                  )..loadWorkouts(),
+              child: child),
+        ),
       ),
     );
   }

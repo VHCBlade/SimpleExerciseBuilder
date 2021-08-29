@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:simple_exercise_builder/bloc/counter.dart';
 import 'package:simple_exercise_builder/bloc/navigation/navigation.dart';
 import 'package:simple_exercise_builder/screen/exercise/exercise_list.dart';
+import 'package:simple_exercise_builder/screen/workout/workout_list.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -67,9 +68,9 @@ class _MainScreenState extends State<MainScreen> {
         // Home
         PlaceholderScreen(),
         // Workout
-        PlaceholderScreen(),
+        WorkoutListScreen(),
         // Exercise
-        ExerciseList(),
+        ExerciseListScreen(),
         // Settings
         PlaceholderScreen()
       ],

@@ -6,10 +6,10 @@ import 'package:simple_exercise_builder/model/exercise.dart';
 import 'package:simple_exercise_builder/screen/exercise/exercise_info.dart';
 import 'package:simple_exercise_builder/screen/exercise/search_bar.dart';
 
-class ExerciseList extends StatelessWidget {
+class ExerciseListScreen extends StatelessWidget {
   final void Function(Exercise exercise)? action;
 
-  const ExerciseList({Key? key, this.action}) : super(key: key);
+  const ExerciseListScreen({Key? key, this.action}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

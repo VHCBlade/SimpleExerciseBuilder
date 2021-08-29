@@ -47,6 +47,12 @@ class WorkoutExercise implements GenericModel {
 
   @override
   int get typeId => 1;
+
+  Duration get totalTime => Duration(
+        seconds: ((time ?? 0) * (setCount ?? 1)) +
+            ((restBetween ?? 0) * ((setCount ?? 1) - 1)) +
+            (restAfter ?? 0),
+      );
 }
 
 class Workout implements GenericModel {
@@ -59,8 +65,9 @@ class Workout implements GenericModel {
   String? name;
   int? id;
   String? customMessage;
+  bool userMade;
 
-  Workout({this.name, this.id});
+  Workout({this.name, this.id, this.userMade = true});
 
   @override
   void loadFromMap(Map<String, dynamic> map) {
@@ -80,4 +87,9 @@ class Workout implements GenericModel {
 
   @override
   int get typeId => 2;
+
+  Duration get totalTime => exerciseList.fold(
+        Duration.zero,
+        (sum, workoutExercise) => sum + workoutExercise.totalTime,
+      );
 }
