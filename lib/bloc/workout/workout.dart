@@ -80,16 +80,16 @@ class WorkoutBloc extends Bloc {
   void _generateWorkoutList() {
     workoutList.clear();
     if (searchTerm == null) {
-      _addWorkoutsSorted(workoutMap.values);
+      _sortWorkoutsThenAdd(workoutMap.values);
       return;
     }
 
     final search = _searchMeUp.rankedSearch(searchTerm!, workoutMap.values);
-    search.forEach(_addWorkoutsSorted);
+    search.forEach(_sortWorkoutsThenAdd);
   }
 
-  /// Will sort the [workouts] and then add them to the [workoutIDList]
-  void _addWorkoutsSorted(Iterable<Workout> workouts) {
+  /// Sort the [workouts] and then add them to the [workoutList]
+  void _sortWorkoutsThenAdd(Iterable<Workout> workouts) {
     final sortedWorkouts = workouts.toList()
       ..sort((a, b) => a.name!.compareTo(b.name!));
     workoutList.addAll(sortedWorkouts.map((val) => val.id!));
