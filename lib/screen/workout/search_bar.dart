@@ -13,7 +13,7 @@ class WorkoutSearchBar extends SliverPersistentHeaderDelegate {
         child: const Center(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),
-            child: ExerciseSearchField(),
+            child: WorkoutSearchField(),
           ),
         ),
       ),
@@ -32,14 +32,14 @@ class WorkoutSearchBar extends SliverPersistentHeaderDelegate {
   }
 }
 
-class ExerciseSearchField extends StatefulWidget {
-  const ExerciseSearchField({Key? key}) : super(key: key);
+class WorkoutSearchField extends StatefulWidget {
+  const WorkoutSearchField({Key? key}) : super(key: key);
 
   @override
-  _ExerciseSearchFieldState createState() => _ExerciseSearchFieldState();
+  _WorkoutSearchFieldState createState() => _WorkoutSearchFieldState();
 }
 
-class _ExerciseSearchFieldState extends State<ExerciseSearchField> {
+class _WorkoutSearchFieldState extends State<WorkoutSearchField> {
   late final controller = TextEditingController(
       text: BlocProvider.read<WorkoutBloc>(context).searchTerm);
 
