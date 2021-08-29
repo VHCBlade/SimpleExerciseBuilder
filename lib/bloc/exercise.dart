@@ -1,7 +1,7 @@
 import 'package:event_bloc/event_bloc.dart';
 import 'package:search_me_up/search_me_up.dart';
 import 'package:simple_exercise_builder/model/exercise.dart';
-import 'package:simple_exercise_builder/repository/exercise_repo.dart';
+import 'package:simple_exercise_builder/repository/exercise/exercise_repo.dart';
 
 class ExerciseBloc extends Bloc {
   @override

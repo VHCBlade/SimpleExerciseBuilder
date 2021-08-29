@@ -1,6 +1,6 @@
 import 'package:event_bloc/event_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_exercise_builder/bloc/exercise/exercise.dart';
+import 'package:simple_exercise_builder/bloc/exercise.dart';
 
 class ExerciseSearchBar extends SliverPersistentHeaderDelegate {
   @override

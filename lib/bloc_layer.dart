@@ -1,11 +1,9 @@
 import 'package:event_bloc/event_bloc.dart';
-import 'package:event_navigation/event_navigation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_exercise_builder/bloc/counter.dart';
-import 'package:simple_exercise_builder/bloc/exercise/exercise.dart';
-import 'package:simple_exercise_builder/bloc/navigation/navigation.dart';
-import 'package:simple_exercise_builder/repository/exercise_repo.dart';
+import 'package:simple_exercise_builder/bloc/exercise.dart';
+import 'package:simple_exercise_builder/bloc/navigation.dart';
+import 'package:simple_exercise_builder/repository/exercise/exercise_repo.dart';
 
 class BlocLayer extends StatelessWidget {
   final Widget child;
@@ -14,16 +12,14 @@ class BlocLayer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_, parentChannel) => CounterBloc(parentChannel: parentChannel),
+      create: (_, parentChannel) =>
+          generateNavigationBloc(parentChannel: parentChannel),
       child: BlocProvider(
-        create: (_, parentChannel) => generateNavigationBloc(),
-        child: BlocProvider(
-            create: (context, parentChannel) => ExerciseBloc(
-                parentChannel: parentChannel,
-                repo: context.read<ExerciseRepository>())
-              ..loadExercises(),
-            child: child),
-      ),
+          create: (context, parentChannel) => ExerciseBloc(
+              parentChannel: parentChannel,
+              repo: context.read<ExerciseRepository>())
+            ..loadExercises(),
+          child: child),
     );
   }
 }

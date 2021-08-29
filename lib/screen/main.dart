@@ -2,7 +2,6 @@ import 'package:event_bloc/event_bloc.dart';
 import 'package:event_navigation/event_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_exercise_builder/bloc/counter.dart';
 import 'package:simple_exercise_builder/screen/exercise/exercise_list.dart';
 
 const NAVIGATION_OPTIONS = ['home', 'workout', 'exercise', 'settings'];
@@ -32,8 +31,8 @@ class PlaceholderScreen extends StatelessWidget {
   const PlaceholderScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.watch<CounterBloc>(context);
-    return Center(
+    return Scaffold(
+        body: Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -41,21 +40,15 @@ class PlaceholderScreen extends StatelessWidget {
             'You have pushed the button this many times:',
           ),
           Text(
-            '${bloc.counter}',
+            BlocProvider.read<MainNavigationBloc<String>>(context)
+                .fullNavigation,
             style: Theme.of(context).textTheme.headline4,
           ),
           ElevatedButton(
-              onPressed: () => context
-                  .read<BlocEventChannel>()
-                  .fireEvent(INCREMENT_COUNTER_EVENT, null),
-              child: const Text('Increment Counter')),
-          ElevatedButton(
-              onPressed: () => context
-                  .read<BlocEventChannel>()
-                  .fireEvent(RESET_COUNTER_EVENT, null),
-              child: const Text('Reset Counter')),
+              onPressed: () => '', child: const Text('Increment Counter')),
+          const ElevatedButton(onPressed: null, child: Text('Reset Counter')),
         ],
       ),
-    );
+    ));
   }
 }
