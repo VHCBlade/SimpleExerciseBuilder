@@ -46,6 +46,7 @@ class WorkoutBloc extends Bloc {
   void addNewWorkout() async {
     await repo.addWorkout(
       Workout(
+        id: null,
         name: 'New Workout',
         userMade: true,
       ),
@@ -65,6 +66,7 @@ class WorkoutBloc extends Bloc {
   void duplicateWorkout(Workout workout) async {
     final clone = Workout();
     clone.loadFromMap(workout.toMap());
+    clone.id = null;
     clone.name = 'Copy of ${clone.name}';
     await repo.addWorkout(clone);
 
