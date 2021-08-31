@@ -1,7 +1,7 @@
 import 'package:event_bloc/event_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:simple_exercise_builder/bloc/exercise/exercise.dart';
+import 'package:simple_exercise_builder/bloc/exercise.dart';
 import 'package:simple_exercise_builder/model/exercise.dart';
 import 'package:simple_exercise_builder/screen/exercise/exercise_info.dart';
 import 'package:simple_exercise_builder/screen/exercise/search_bar.dart';
