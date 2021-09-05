@@ -129,31 +129,26 @@ class _WorkoutCategoryGroupState extends State<WorkoutCategoryGroup>
       animation.animateTo(isExpanded ? 1 : 0);
     }
 
-    return AnimatedBuilder(
-      animation: animation,
-      builder: (_, _a) => SafeArea(
-        child: Column(
-          children: [
-            WorkoutCategoryHeader(
-              animation: animation,
-              label: '${widget.category} (${widget.workoutIDs.length})',
-              onExpand: () => setState(() => isExpanded = !isExpanded),
-            ),
-            SizeTransition(
-              axisAlignment: -1,
-              sizeFactor: animation,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                child: WorkoutCategoryList(
-                  workoutIDs: widget.workoutIDs,
-                  editMode: widget.editMode,
-                  action: widget.action ?? (_) {},
-                ),
-              ),
-            ),
-          ],
+    return Column(
+      children: [
+        WorkoutCategoryHeader(
+          animation: animation,
+          label: '${widget.category} (${widget.workoutIDs.length})',
+          onExpand: () => setState(() => isExpanded = !isExpanded),
         ),
-      ),
+        SizeTransition(
+          axisAlignment: -1,
+          sizeFactor: animation,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+            child: WorkoutCategoryList(
+              workoutIDs: widget.workoutIDs,
+              editMode: widget.editMode,
+              action: widget.action ?? (_) {},
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -172,7 +167,6 @@ class WorkoutCategoryHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       child: Padding(
@@ -182,11 +176,14 @@ class WorkoutCategoryHeader extends StatelessWidget {
             Expanded(
               child: Text(label),
             ),
-            RotationTransition(
-              turns: Tween(begin: 0.0, end: 0.5).animate(animation),
-              child: IconButton(
-                onPressed: onExpand,
-                icon: const Icon(Icons.keyboard_arrow_down),
+            AnimatedBuilder(
+              animation: animation,
+              builder: (_, _a) => RotationTransition(
+                turns: Tween(begin: 0.0, end: 0.5).animate(animation),
+                child: IconButton(
+                  onPressed: onExpand,
+                  icon: const Icon(Icons.keyboard_arrow_down),
+                ),
               ),
             ),
           ],
