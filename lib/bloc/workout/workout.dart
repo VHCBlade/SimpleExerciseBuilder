@@ -21,6 +21,19 @@ class WorkoutBloc extends Bloc {
 
   final workoutList = <int>[];
   final workoutMap = <int, Workout>{};
+
+  List<int> get userMadeWorkoutList {
+    return workoutList
+        .where((id) => workoutMap[id] != null && workoutMap[id]!.userMade)
+        .toList();
+  }
+
+  List<int> get preMadeWorkoutList {
+    return workoutList
+        .where((id) => workoutMap[id] != null && !workoutMap[id]!.userMade)
+        .toList();
+  }
+
   String? searchTerm;
 
   /// This will load the workouts from the [repo]

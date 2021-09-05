@@ -4,13 +4,13 @@ import 'package:simple_exercise_builder/bloc/workout/workout.dart';
 import 'package:simple_exercise_builder/model/workout.dart';
 
 class WorkoutCategoryList extends StatelessWidget {
-  final List<Workout> workouts;
+  final List<int> workoutIDs;
   final bool editMode;
   final void Function(Workout) action;
   const WorkoutCategoryList({
     Key? key,
     required this.action,
-    required this.workouts,
+    required this.workoutIDs,
     required this.editMode,
   }) : super(key: key);
 
@@ -21,10 +21,12 @@ class WorkoutCategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.watch<WorkoutBloc>(context);
+    final workoutMap = bloc.workoutMap;
     final theme = Theme.of(context);
 
     return Column(
-      children: workouts.map((workout) {
+      children: workoutIDs.map((workoutID) {
+        final workout = workoutMap[workoutID]!;
         return Card(
           child: ListTile(
             trailing: editMode

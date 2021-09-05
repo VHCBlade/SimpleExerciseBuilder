@@ -28,13 +28,6 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.watch<WorkoutBloc>(context);
-    final workoutMap = bloc.workoutMap;
-    final workoutList = bloc.workoutList
-        .map((workoutID) => workoutMap[workoutID])
-        .where((workout) => workout != null);
-    final userMadeWorkouts = workoutList.where((workout) => workout!.userMade);
-    final preMadeWorkouts = workoutList.where((workout) => !workout!.userMade);
-
     final appBarActions = <Widget>[];
 
     if (widget.enableModifying && !editMode) {
@@ -72,13 +65,13 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
               WorkoutCategoryGroup(
                 action: widget.action,
                 category: 'Your Workouts',
-                workouts: List.from(userMadeWorkouts),
+                workoutIDs: bloc.userMadeWorkoutList,
                 editMode: editMode,
               ),
               WorkoutCategoryGroup(
                 action: widget.action,
                 category: 'Try These Workouts',
-                workouts: List.from(preMadeWorkouts),
+                workoutIDs: bloc.preMadeWorkoutList,
                 editMode: editMode,
               ),
             ]),
@@ -98,14 +91,14 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
 class WorkoutCategoryGroup extends StatefulWidget {
   final void Function(Workout)? action;
   final String category;
-  final List<Workout> workouts;
+  final List<int> workoutIDs;
   final bool editMode;
 
   const WorkoutCategoryGroup({
     Key? key,
     required this.action,
     required this.category,
-    required this.workouts,
+    required this.workoutIDs,
     required this.editMode,
   }) : super(key: key);
 
@@ -143,7 +136,7 @@ class _WorkoutCategoryGroupState extends State<WorkoutCategoryGroup>
           children: [
             WorkoutCategoryHeader(
               animation: animation,
-              label: '${widget.category} (${widget.workouts.length})',
+              label: '${widget.category} (${widget.workoutIDs.length})',
               onExpand: () => setState(() => isExpanded = !isExpanded),
             ),
             SizeTransition(
@@ -152,7 +145,7 @@ class _WorkoutCategoryGroupState extends State<WorkoutCategoryGroup>
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
                 child: WorkoutCategoryList(
-                  workouts: widget.workouts,
+                  workoutIDs: widget.workoutIDs,
                   editMode: widget.editMode,
                   action: widget.action ?? (_) {},
                 ),
