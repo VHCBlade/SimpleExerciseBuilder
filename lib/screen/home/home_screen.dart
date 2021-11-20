@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
         {
           WorkoutExercise.EXERCISE: 0,
           WorkoutExercise.EQUIPMENT_USED: convertExerciseEquipmentToInt([
-            ExerciseEquipment.band,
+            ExerciseEquipment.pullup,
           ]),
           WorkoutExercise.TIME_IN_SECONDS: 30,
           WorkoutExercise.SETS: 5,
@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
         {
           WorkoutExercise.EXERCISE: 1,
           WorkoutExercise.EQUIPMENT_USED: convertExerciseEquipmentToInt([
-            ExerciseEquipment.barbell,
+            ExerciseEquipment.none,
           ]),
           WorkoutExercise.TIME_IN_SECONDS: 20,
           WorkoutExercise.SETS: 3,
@@ -37,9 +37,9 @@ class HomeScreen extends StatelessWidget {
           WorkoutExercise.AFTER_REST: 10,
         },
         {
-          WorkoutExercise.EXERCISE: 2,
+          WorkoutExercise.EXERCISE: 1,
           WorkoutExercise.EQUIPMENT_USED: convertExerciseEquipmentToInt([
-            ExerciseEquipment.barbell,
+            ExerciseEquipment.balance,
           ]),
           WorkoutExercise.TIME_IN_SECONDS: 5,
           WorkoutExercise.SETS: 2,
