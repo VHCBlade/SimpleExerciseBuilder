@@ -1,7 +1,7 @@
 import 'package:event_bloc/event_bloc.dart';
 import 'package:event_navigation/event_navigation.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_exercise_builder/bloc/navigation.dart';
+import 'package:simple_exercise_builder/bloc/theme.dart';
 import 'package:simple_exercise_builder/bloc_layer.dart';
 import 'package:simple_exercise_builder/repository_layer.dart';
 import 'package:simple_exercise_builder/screen/main.dart';
@@ -22,10 +22,25 @@ class MyApp extends StatelessWidget {
 class AppLayer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final themeBloc = BlocProvider.watch<ThemeBloc>(context);
+    late final ThemeMode themeMode;
+    switch (themeBloc.setting) {
+      case ThemeSetting.useDevice:
+        themeMode = ThemeMode.system;
+        break;
+      case ThemeSetting.light:
+        themeMode = ThemeMode.light;
+        break;
+      case ThemeSetting.dark:
+      default:
+        themeMode = ThemeMode.dark;
+        break;
+    }
     return EventNavigationApp(
       title: 'Exercise Demo',
       theme: ThemeData(highlightColor: Colors.lightBlue[100]),
       darkTheme: ThemeData.dark(),
+      themeMode: themeMode,
       child: const MyHomePage(title: 'Exercise Demo Home Page'),
     );
   }
