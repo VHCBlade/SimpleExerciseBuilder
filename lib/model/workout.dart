@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:simple_exercise_builder/model/enum.dart';
 import 'package:simple_exercise_builder/model/generic.dart';
 import 'package:simple_exercise_builder/model/exercise.dart';
-import 'package:simple_exercise_builder/bloc/exercise/exercise.dart';
+import 'package:simple_exercise_builder/bloc/exercise.dart';
 
 /// Wourkout Exercise details stored within a workout.
 class WorkoutExercise implements GenericModel {
@@ -79,19 +79,10 @@ class WorkoutExercise implements GenericModel {
   }
 
   int get totalTime {
-    if (time == null) {
-      throw ArgumentError(
-          'Time on Workout exercise must not be null on runtime');
-    } else if (setCount == null) {
-      throw ArgumentError(
-          'Set count on Workout exercise must not be null on runtime');
-    } else if (restBetween == null) {
-      throw ArgumentError(
-          'Rest in between on Workout exercise must not be null on runtime');
-    } else if (restAfter == null) {
-      throw ArgumentError(
-          'Rest after on Workout exercise must not be null on runtime');
-    }
+    _checkNullOnRuntime(time, 'Time on Workout exercise');
+    _checkNullOnRuntime(setCount, 'Set count on Workout exercise');
+    _checkNullOnRuntime(restBetween, 'Rest inbetween on Workout exercise');
+    _checkNullOnRuntime(restAfter, 'Rest after on Workout exercise');
 
     return ((time! + restBetween!) * setCount!) - restBetween! + restAfter!;
   }
@@ -118,6 +109,12 @@ class WorkoutExercise implements GenericModel {
 
   @override
   int get typeId => 1;
+
+  void _checkNullOnRuntime(variable, String errorDescription) {
+    if (variable == null) {
+      throw ArgumentError(errorDescription + ' must not be null on runtime');
+    }
+  }
 }
 
 class Workout implements GenericModel {
