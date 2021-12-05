@@ -31,21 +31,7 @@ String generateMuscleGroupText(Exercise exercise) {
   final set = exercise.muscleGroupsSet;
 
   final iterable = set.map((val) {
-    switch (val) {
-      case MuscleGroup.abdominals:
-        return 'Abdominals';
-      case MuscleGroup.arms:
-        return 'Arms';
-      case MuscleGroup.back:
-        return 'Back';
-      case MuscleGroup.chest:
-        return 'Chest';
-      case MuscleGroup.shoulders:
-        return 'Shoulders';
-      case MuscleGroup.legs:
-      default:
-        return 'Legs';
-    }
+    return val.getDisplayText();
   });
 
   return iterable.reduce((value, element) => '$value, $element');
@@ -55,23 +41,7 @@ String generateExerciseEquipmentText(Exercise exercise) {
   final set = exercise.availableExerciseEquipment;
 
   final iterable = set.map((val) {
-    switch (val) {
-      case ExerciseEquipment.balance:
-        return 'Balance Board';
-      case ExerciseEquipment.band:
-        return 'Exercise Band';
-      case ExerciseEquipment.barbell:
-        return 'Barbell';
-      case ExerciseEquipment.dumbbell:
-        return 'Dumbbell';
-      case ExerciseEquipment.kettlebell:
-        return 'Kettlebell';
-      case ExerciseEquipment.pullup:
-        return 'Pull Up Bar';
-      case ExerciseEquipment.none:
-      default:
-        return 'None';
-    }
+    return val.getDisplayText();
   });
 
   return iterable.reduce((value, element) => '$value, $element');

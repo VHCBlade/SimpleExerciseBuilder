@@ -60,3 +60,40 @@ Set<ExerciseEquipment> convertIntToExerciseEquipment(int bitwise) =>
 
 int convertExerciseEquipmentToInt(Iterable<ExerciseEquipment> iterable) =>
     convertIterableToInt(ExerciseEquipment.values, iterable);
+
+extension MuscleGroupDisplayText on MuscleGroup {
+  static const _muscleGroupTextMapping = {
+    MuscleGroup.abdominals: 'Abdominals',
+    MuscleGroup.arms: 'Arms',
+    MuscleGroup.back: 'Back',
+    MuscleGroup.chest: 'Chest',
+    MuscleGroup.shoulders: 'Shoulders',
+    MuscleGroup.legs: 'Legs',
+  };
+
+  String getDisplayText() {
+    if (_muscleGroupTextMapping.containsKey(this)) {
+      return _muscleGroupTextMapping[this]!;
+    }
+    return '';
+  }
+}
+
+extension ExerciseEquipmentDisplayText on ExerciseEquipment {
+  static const _equipmentTextMapping = {
+    ExerciseEquipment.balance: 'Balance Board',
+    ExerciseEquipment.band: 'Exercise Band',
+    ExerciseEquipment.barbell: 'Barbell',
+    ExerciseEquipment.dumbbell: 'Dumbbell',
+    ExerciseEquipment.kettlebell: 'Kettlebell',
+    ExerciseEquipment.pullup: 'Pull Up Bar',
+    ExerciseEquipment.none: 'None',
+  };
+
+  String getDisplayText() {
+    if (_equipmentTextMapping.containsKey(this)) {
+      return _equipmentTextMapping[this]!;
+    }
+    return '';
+  }
+}

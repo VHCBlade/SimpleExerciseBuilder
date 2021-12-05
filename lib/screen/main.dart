@@ -1,8 +1,8 @@
 import 'package:event_bloc/event_bloc.dart';
 import 'package:event_navigation/event_navigation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:simple_exercise_builder/screen/exercise/exercise_list.dart';
+import 'package:simple_exercise_builder/screen/home/home_screen.dart';
 
 const NAVIGATION_OPTIONS = ['home', 'workout', 'exercise', 'settings'];
 
@@ -18,6 +18,7 @@ class MainScreen extends StatelessWidget {
             case 'exercise':
               return const ExerciseList();
             case 'home':
+              return const HomeScreen();
             case 'workout':
             case 'settings':
             default:
