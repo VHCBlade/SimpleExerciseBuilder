@@ -35,12 +35,10 @@ class SelectedWorkoutWidget extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {},
-              child: const Expanded(
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: Icon(
-                    Icons.edit,
-                  ),
+              child: const Align(
+                alignment: Alignment.topRight,
+                child: Icon(
+                  Icons.edit,
                 ),
               ),
             ),

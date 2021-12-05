@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   Workout getSelectedWorkout(BuildContext context) {
-    return Workout.fromMap(context, {
+    return Workout.fromMap({
       Workout.WORKOUT_ID: 0,
       Workout.NAME: "Haron's Workout",
       Workout.CUSTOM_MESSAGE: "Time for McDo!",
@@ -54,8 +54,15 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final workout = getSelectedWorkout(context);
 
-    return Container(
-      margin: const EdgeInsets.all(30.0),
+    //TODO: Get equipment used and muscle groups based on selected workout and its exercises
+    const workoutEquipmentUsed = [
+      'Mock Equipment Used1',
+      'Mock Equipment Used2'
+    ];
+    const workoutMuscleGroups = ['Mock Muscle Group1', 'Mock Muscle Group2'];
+
+    return Padding(
+      padding: const EdgeInsets.all(30.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -69,8 +76,8 @@ class HomeScreen extends StatelessWidget {
               child: SelectedWorkoutWidget(
                 workoutName: workout.name!,
                 workoutDuration: workout.totalTime,
-                workoutEquipment: workout.equipmentUsed,
-                workoutMuscleGroups: workout.muscleGroups,
+                workoutEquipment: workoutEquipmentUsed,
+                workoutMuscleGroups: workoutMuscleGroups,
               ),
             ),
           ),
